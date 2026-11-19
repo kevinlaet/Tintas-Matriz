@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Panfleto Tintas Matriz</title>
+<style>
+@page{size:216mm 303mm;margin:0}
+:root{--or:#F7A600;--rd:#C8102E;--grad:linear-gradient(135deg,#F7A600 0%,#EE6A0A 50%,#C8102E 100%);--ink:#2b2224;--mut:#6d6264}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{font-family:'Inter',sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{position:relative;width:216mm;height:303mm;overflow:hidden;page-break-after:always;background:#fff}
+.abs{position:absolute}
+.ic{width:100%;height:100%;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.dot{border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center}
+/* FRENTE */
+.hero{left:0;top:0;width:216mm;height:200mm}
+.hero svg{width:100%;height:100%;display:block}
+.logo{left:11mm;top:11mm;width:40mm;height:40mm;filter:drop-shadow(0 1.2mm 2mm rgba(90,0,0,.35))}
+.chip{right:11mm;top:15mm;padding:2.2mm 4.5mm;border:.4mm solid rgba(255,255,255,.85);border-radius:6mm;color:#fff;font-size:3.1mm;font-weight:700;letter-spacing:.35mm;text-transform:uppercase}
+h1{left:11mm;top:62mm;width:100mm;color:#fff;font-weight:900;font-size:11.2mm;line-height:1.06;letter-spacing:-.25mm;text-shadow:0 .8mm 2mm rgba(110,0,10,.3)}
+.sub{left:11mm;top:119mm;width:88mm;color:#fff}
+.sub b{display:block;font-size:4.1mm;font-weight:800;letter-spacing:.2mm;text-transform:uppercase;line-height:1.25;margin-bottom:1.6mm}
+.sub span{font-size:3.5mm;font-weight:500;opacity:.95;line-height:1.35}
+.glow{left:78mm;top:35mm;width:140mm;height:140mm;background:radial-gradient(circle,rgba(255,236,170,.75) 0%,rgba(255,200,90,.28) 40%,rgba(255,200,90,0) 68%)}
+.floor{left:104mm;top:176mm;width:98mm;height:13mm;background:radial-gradient(ellipse,rgba(70,0,0,.55) 0%,rgba(70,0,0,.25) 45%,rgba(70,0,0,0) 72%)}
+.bucket{left:97mm;top:56mm;height:126mm;filter:drop-shadow(0 2mm 3mm rgba(60,0,0,.35))}
+.bens{left:11mm;top:206mm;width:194mm;display:grid;grid-template-columns:repeat(4,1fr);gap:5mm}
+.ben{display:flex;flex-direction:column;align-items:center;text-align:center}
+.ben .dot{width:15mm;height:15mm;padding:3.4mm;margin-bottom:2.2mm}
+.ben b{font-size:3.5mm;font-weight:800;line-height:1.2}
+.ben span{font-size:3mm;color:var(--mut);line-height:1.3;margin-top:.8mm}
+.tech{left:11mm;top:236mm;width:194mm;height:40mm;border-radius:4mm;background:#fbf4ee;border:.3mm solid #f1dfd0;padding:4mm 5mm;display:grid;grid-template-columns:1fr 1fr;gap:4mm 5mm}
+.pack{display:flex;align-items:center;gap:3.5mm;background:#fff;border-radius:3mm;padding:2.5mm 3.5mm;border:.3mm solid #f1dfd0}
+.pack .n{font-size:8.5mm;font-weight:900;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+.pack .n small{font-size:4.2mm;font-weight:800}
+.pack p{font-size:3.3mm;line-height:1.25;color:var(--mut)}
+.pack p b{display:block;color:var(--ink);font-size:3.7mm}
+.cores{grid-column:1/3;display:flex;align-items:center;justify-content:space-between}
+.cores>b{font-size:3.5mm;font-weight:800;text-transform:uppercase;letter-spacing:.25mm;width:19mm;line-height:1.15}
+.sw{display:flex;flex-direction:column;align-items:center;gap:1.1mm;font-size:3mm;font-weight:600}
+.sw i{display:block;width:10.5mm;height:10.5mm;border-radius:50%;border:.35mm solid #fff;box-shadow:0 0 0 .3mm #d9c9bb}
+.foot{left:0;top:284mm;width:216mm;height:19mm;background:var(--grad)}
+.foot .t{left:11mm;top:3.5mm;color:#fff;font-size:5.2mm;font-weight:800;font-style:italic;letter-spacing:.1mm}
+.foot .r{right:11mm;top:4.6mm;color:#fff;font-size:3.3mm;font-weight:600;text-align:right;line-height:1.35}
+/* VERSO */
+.vh{left:11mm;top:10mm;width:194mm;height:18mm;display:flex;align-items:center;gap:5mm}
+.vh img{width:18mm;height:18mm}
+.vh h2{font-size:7.6mm;font-weight:900;letter-spacing:-.2mm;line-height:1}
+.vh h2 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vh p{font-size:3.5mm;color:var(--mut);margin-top:1.8mm;line-height:1.3}
+.col{left:11mm;top:31mm;width:194mm;display:flex;flex-direction:column;gap:3.4mm}
+.blocks{display:grid;grid-template-columns:1fr 1fr;gap:3.4mm}
+.blk{border:.3mm solid #ecdccc;border-radius:3mm;overflow:hidden;background:#fff}
+.blk.w{grid-column:1/3}
+.bh{background:var(--grad);color:#fff;font-weight:800;font-size:3.8mm;letter-spacing:.3mm;text-transform:uppercase;padding:2mm 4mm;display:flex;justify-content:space-between;align-items:center}
+.bh span{font-size:2.9mm;font-weight:600;opacity:.95;letter-spacing:.1mm;text-transform:none}
+.bb{display:flex;gap:3mm;padding:2.6mm 3.5mm}
+.imgs{display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.imgs img{display:block;object-fit:contain}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:.5mm 1mm;width:56mm;align-items:end}
+.grid4 img{width:100%;height:25mm}
+.lst2{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:2mm 4mm;align-content:center}
+.lst2 div{font-size:3mm;line-height:1.28;color:var(--mut)}
+.lst2 b{display:block;font-size:3.3mm;color:var(--ink);font-weight:800}
+.one{width:24mm}.one img{width:24mm;height:34mm}
+.lst{flex:1;display:flex;flex-direction:column;justify-content:center;gap:1.7mm}
+.lst div{font-size:2.95mm;line-height:1.25;color:var(--mut)}
+.lst b{display:block;font-size:3.3mm;color:var(--ink);font-weight:800}
+.med{width:20mm;height:20mm;padding:4.4mm;margin:2mm 0}
+.strip{left:11mm;width:194mm}
+.emb{top:0;position:relative}
+.band{border-radius:3mm;padding:2.2mm 4mm;display:flex;align-items:center;gap:3.5mm}
+.band.emb{background:#fbf4ee;border:.3mm solid #f1dfd0}
+.band h3{font-size:3.5mm;font-weight:800;text-transform:uppercase;letter-spacing:.25mm;line-height:1.2;width:27mm;flex-shrink:0}
+.chips{display:flex;gap:2mm;flex:1;justify-content:space-between}
+.chips span{background:#fff;border:.3mm solid #e8d3bf;border-radius:5mm;padding:1.6mm 3mm;font-size:3.1mm;font-weight:700;white-space:nowrap}
+.band.dif{background:var(--grad);color:#fff;justify-content:space-between;padding:2.4mm 5mm}
+.d{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:3mm;font-weight:700;line-height:1.2;width:33mm}
+.d svg{width:8mm;height:8mm;margin-bottom:1mm;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bot{display:grid;grid-template-columns:1fr 80mm;gap:3.4mm}
+.contato{border:.3mm solid #ecdccc;border-radius:3mm;padding:2.4mm 4.5mm;display:flex;flex-direction:column;justify-content:center;gap:1.5mm}
+.contato h4{font-size:3.8mm;font-weight:900;text-transform:uppercase;letter-spacing:.3mm;margin-bottom:.4mm}
+.contato div{display:flex;align-items:center;gap:2.6mm;font-size:3.3mm;font-weight:600}
+.contato .dot{width:6.2mm;height:6.2mm;padding:1.4mm;flex-shrink:0}
+.contato small{display:block;font-size:2.7mm;color:var(--mut);font-weight:500}
+.qr{border-radius:3mm;background:#fbf4ee;border:.3mm solid #f1dfd0;display:flex;align-items:center;gap:3.5mm;padding:3mm 4mm}
+.qr .box{background:#fff;padding:2mm;border-radius:2mm;border:.3mm solid #ecdccc;flex-shrink:0}
+.qr .box img{width:22mm;height:22mm;display:block}
+.qr b{font-size:4.2mm;font-weight:900;line-height:1.15;display:block;margin-bottom:1.2mm}
+.qr span{font-size:3mm;color:var(--mut);line-height:1.3}
+.vf{left:0;top:287mm;width:216mm;height:16mm;background:var(--grad);display:flex;align-items:center;padding:0 11mm;gap:3.5mm}
+.vf img{width:10mm;height:10mm;margin-top:-1mm}
+.vf b{color:#fff;font-size:4.4mm;font-style:italic;font-weight:800}
+.vf span{margin-left:auto;color:#fff;font-size:3mm;font-weight:600}
+</style></head><body>
+
+<!-- ================= FRENTE ================= -->
+<section class="page" id="frente">
+ <div class="abs hero"><svg viewBox="0 0 216 200" preserveAspectRatio="none">
+  <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7A600"/><stop offset=".5" stop-color="#EE6A0A"/><stop offset="1" stop-color="#C8102E"/></linearGradient></defs>
+  <path d="M0 0H216V168C170 192 100 200 0 183Z" fill="url(#g1)"/>
+  <path d="M0 183C100 200 170 192 216 168V173C172 198 100 207 0 190Z" fill="#fff"/>
+  <path d="M0 190C100 207 172 198 216 173V177C172 203 100 212 0 195Z" fill="#E8450C" opacity=".85"/>
+  <circle cx="190" cy="25" r="60" fill="#fff" opacity=".07"/><circle cx="20" cy="150" r="45" fill="#fff" opacity=".06"/>
+ </svg></div>
+ <img class="abs logo" src="assets/logo_t.png" alt="Matriz">
+ <div class="abs chip">Linha Impermeabilizantes</div>
+ <h1 class="abs">Proteção emborrachada que sua fachada merece</h1>
+ <div class="abs sub"><b>Fachadas &amp; Muros<br>Proteção Emborrachada</b><span>Proteção impermeabilizante fundo e acabamento, para superfícies externas.</span></div>
+ <div class="abs glow"></div><div class="abs floor"></div>
+ <img class="abs bucket" src="assets/emborrachada_up.png" alt="Fachadas &amp; Muros Proteção Emborrachada">
+
+ <div class="abs bens">
+  <div class="ben"><div class="dot"><svg class="ic" viewBox="0 0 24 24"><path d="M3 9c3-3 6 3 9 0s6 3 9 0"/><path d="M3 14c3-3 6 3 9 0s6 3 9 0"/><path d="M3 19h18"/></svg></div><b>Película elástica</b><span>Cobre pequenas fissuras</span></div>
+  <div class="ben"><div class="dot"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12Z"/><path d="M9.5 16a2.6 2.6 0 0 0 2.5 2"/></svg></div><b>Repele a água</b><span>Das batidas de chuva</span></div>
+  <div class="ben"><div class="dot"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/><path d="m3 17.5 9 5 9-5" opacity=".7"/></svg></div><b>Fundo + acabamento</b><span>Dois em um só produto</span></div>
+  <div class="ben"><div class="dot"><svg class="ic" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></svg></div><b>Uso externo</b><span>Fachadas e muros</span></div>
+ </div>
+
+ <div class="abs tech">
+  <div class="pack"><div class="n">18<small> kg</small></div><p><b>Balde 18 kg</b>Rende até 90 m² acabado</p></div>
+  <div class="pack"><div class="n">3,6<small> kg</small></div><p><b>Galão 3,6 kg</b>Rende até 18 m² acabado</p></div>
+  <div class="cores"><b>Cores<br>disponíveis</b>
+   <div class="sw"><i style="background:#fff"></i>Branco</div><div class="sw"><i style="background:#9B4B22"></i>Tabaco</div><div class="sw"><i style="background:#231F20"></i>Preto</div>
+   <div class="sw"><i style="background:#A09D77"></i>Elefante</div><div class="sw"><i style="background:#D4A55D"></i>Camurça</div><div class="sw"><i style="background:#868249"></i>Concreto</div></div>
+ </div>
+ <div class="abs foot"><div class="abs t">O seu jeito de colorir</div><div class="abs r">Interior e exterior<br>Peça no seu depósito de tintas</div></div>
+</section>
+
+<!-- ================= VERSO ================= -->
+<section class="page" id="verso">
+ <div class="abs vh"><img src="assets/logo_t.png" alt="Matriz"><div><h2>Linha completa <em>Matriz</em></h2><p>Tintas e complementos para toda obra, da premium à econômica.</p></div></div>
+ <div class="abs col"><div class="blocks">
+  <div class="blk w"><div class="bh">Tintas Acrílicas <span>Interna e externa · sistema tintométrico</span></div>
+   <div class="bb"><div class="imgs grid4"><img src="assets/premium_up.png"><img src="assets/hiper_up.png"><img src="assets/pisos_up.png"><img src="assets/extra_up.png"></div>
+   <div class="lst2">
+    <div><b>Premium Completo</b>Fosco, acetinado e semi-brilho.</div>
+    <div><b>Anti Bactéria Premium</b>Previne fungos e bactérias.</div>
+    <div><b>Hiper Rendimento</b>Standard, de alto rendimento.</div>
+    <div><b>Pisos &amp; Fachadas Premium</b>Alta resistência. Interna e externa.</div>
+    <div><b>Extra Rendimento</b>Econômica, de ótimo rendimento.</div>
+    <div><b>Profissional</b>Econômica para ambientes internos.</div>
+    <div><b>Gesso &amp; Drywall</b>Direto sobre gesso e drywall.</div>
+   </div></div></div>
+
+  <div class="blk"><div class="bh">Impermeabilizantes</div>
+   <div class="bb"><div class="imgs one"><img src="assets/emborrachada_up.png"></div>
+   <div class="lst">
+    <div><b>Borracha Líquida</b>Protege paredes externas.</div>
+    <div><b>Fachadas &amp; Muros Proteção Emborrachada</b>Cobre pequenas fissuras.</div>
+    <div><b>Manta Líquida Emborrachada Telhados &amp; Lajes</b>Impede a infiltração de água.</div>
+   </div></div></div>
+
+  <div class="blk"><div class="bh">Madeiras &amp; Metais</div>
+   <div class="bb"><div class="imgs" style="width:30mm"><img src="assets/ecologico_up.png" style="width:30mm;height:30mm"></div>
+   <div class="lst">
+    <div><b>Esmalte Epóxi Base Água</b>Secagem rápida, sem cheiro e com proteção anti-mofo.</div>
+    <div><b>Esmalte Ecológico Base Água</b>Secagem rápida, baixo odor e ótima cobertura, para áreas externas e internas.</div>
+   </div></div></div>
+
+  <div class="blk"><div class="bh">Brilho &amp; Proteção</div>
+   <div class="bb"><div class="imgs" style="width:24mm"><div class="dot med"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12Z"/><path d="M16.5 4v3M15 5.5h3"/></svg></div></div>
+   <div class="lst">
+    <div><b>Verniz Acrílico Liqui-Brilho</b>Proteção e brilho para paredes internas e artesanato.</div>
+    <div><b>Resina Acrílica Aqua</b>Incolor e colorida: embeleza, protege e impermeabiliza.</div>
+   </div></div></div>
+
+  <div class="blk"><div class="bh">Complementos &amp; Revestimentos</div>
+   <div class="bb"><div class="imgs" style="width:24mm"><div class="dot med"><svg class="ic" viewBox="0 0 24 24"><path d="M4 18h16"/><path d="M6 18 9 8h9l-3 10"/><path d="M9 8 7 5"/></svg></div></div>
+   <div class="lst" style="gap:1.2mm">
+    <div><b>Massa Corrida e Massa Acrílica</b>Nivelam e corrigem superfícies.</div>
+    <div><b>Selador Acrílico</b>Sela e uniformiza a absorção do reboco.</div>
+    <div><b>Texturas e Grafiato</b>Decoram e revitalizam superfícies.</div>
+    <div><b>Fundo Preparador</b>Firma superfícies arenosas e calcinadas.</div>
+   </div></div></div>
+ </div>
+
+  <div class="band emb"><h3>Embalagens disponíveis</h3>
+   <div class="chips"><span>Pote 800 ml</span><span>Galão 3,6 L</span><span>Balde 16 L</span><span>Balde 18 L</span><span>Baldes e barricas em kg</span></div></div>
+
+  <div class="band dif">
+   <div class="d"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="13" height="6" rx="1.5"/><path d="M17 6h3v5h-8v3"/><rect x="10.5" y="14" width="3" height="7" rx="1"/></svg>Ótima cobertura</div>
+   <div class="d"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14Z"/><path d="M5 19c3-4 6-7 10-9"/></svg>Baixo odor</div>
+   <div class="d"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 16 16 8M12 8h4v4M12 16H8v-4"/></svg>Alto rendimento</div>
+   <div class="d"><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="5"/><circle cx="15" cy="9" r="5"/><circle cx="12" cy="15" r="5"/></svg>Sistema tintométrico</div>
+   <div class="d"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></svg>Interno e externo</div>
+  </div>
+
+  <div class="bot">
+   <div class="contato"><h4>Fale com a Matriz</h4>
+    <div><i class="dot"><svg class="ic" viewBox="0 0 24 24"><path d="M5 19l1.2-3.6A8 8 0 1 1 9 17.9Z"/></svg></i><span>WhatsApp: (00) 00000-0000</span></div>
+    <div><i class="dot"><svg class="ic" viewBox="0 0 24 24"><path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2Z"/></svg></i><span>Telefone: (00) 0000-0000</span></div>
+    <div><i class="dot"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/></svg></i><span>Instagram: @seuinstagram</span></div>
+    <div><i class="dot"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></i><span>Rua Exemplo, 000 – Bairro, Cidade/UF</span></div>
+   </div>
+   <div class="qr"><div class="box"><img src="assets/qr.svg"></div><div><b>Assista ao vídeo da Matriz</b><span>Aponte a câmera do celular para o código.</span></div></div>
+  </div>
+ </div>
+
+ <div class="abs vf"><img src="assets/logo_t.png"><b>O seu jeito de colorir</b><span>Interior e exterior</span></div>
+</section>
+</body></html>
