@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tintas Matriz · O seu jeito de colorir</title>
+<meta name="description" content="Tintas Matriz: fábrica de tintas com linhas da premium à econômica, uso interno e externo, sistema tintométrico e fabricação com a sua marca.">
+<meta name="theme-color" content="#0A0A0A">
+<meta property="og:title" content="Tintas Matriz · O seu jeito de colorir">
+<meta property="og:description" content="Fábrica de tintas: da premium à econômica, e também com a sua marca.">
+<meta property="og:image" content="img/og-matriz.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preload" href="fonts/sora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="img/baldes/12-protecao-emborrachada.webp" as="image">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="carregando">
+
+<!-- Tela de abertura -->
+<div id="loader" aria-hidden="true">
+  <img src="img/logo-matriz.webp" alt="" class="loader-logo">
+  <div class="loader-bar"><i></i></div>
+</div>
+
+<canvas id="particulas" aria-hidden="true"></canvas>
+<div class="grao" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><i class="cursor-anel"></i><i class="cursor-ponto"></i></div>
+<div class="progresso" aria-hidden="true"><i></i></div>
+
+<header class="nav">
+  <a href="#inicio" class="nav-logo" aria-label="Tintas Matriz, início"><img src="img/logo-matriz.webp" alt="Tintas Matriz"></a>
+  <nav class="nav-links" aria-label="Seções">
+    <a href="#fabrica">A fábrica</a>
+    <a href="#destaque">Destaque</a>
+    <a href="#linha">Produtos</a>
+    <a href="#sua-marca">Sua marca</a>
+    <a href="#diferenciais">Diferenciais</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <div class="nav-acoes">
+    <button class="btn-icone" id="tela-cheia" type="button" aria-label="Tela cheia" title="Tela cheia (F)">
+      <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+    </button>
+    <a href="#contato" class="btn-nav">Fale conosco</a>
+  </div>
+</header>
+
+<nav class="pontos" aria-label="Navegação por seção"></nav>
+
+<main>
+
+<!-- 1. HERO -->
+<section id="inicio" class="hero" data-secao="Início">
+  <div class="hero-luz" aria-hidden="true"></div>
+  <p class="sobretitulo hero-sobre">Fábrica de tintas · Tintas Matriz</p>
+  <h1 class="hero-titulo"><span class="hl">O seu jeito</span> <span class="hl">de <em class="grad">colorir</em></span></h1>
+  <div class="palco hero-palco" data-tilt="14">
+    <div class="halo"></div>
+    <div class="orbita"><i></i></div>
+    <div class="orbita orbita-2"><i></i></div>
+    <div class="flutua">
+      <div class="gira">
+        <div class="tilt">
+          <img src="img/baldes/12-protecao-emborrachada.webp" alt="Balde Matriz Fachadas & Muros Proteção Emborrachada" class="balde" fetchpriority="high">
+          <div class="brilho"></div>
+        </div>
+      </div>
+    </div>
+    <img src="img/baldes/12-protecao-emborrachada.webp" alt="" class="reflexo" aria-hidden="true">
+    <div class="chao"></div>
+  </div>
+  <p class="hero-legenda"><span>Fachadas &amp; Muros</span> Proteção Emborrachada</p>
+  <a href="#fabrica" class="rolar" aria-label="Role para descobrir"><span class="rolar-mouse"><i></i></span><span>Role para descobrir</span></a>
+</section>
+
+<!-- 2. A FÁBRICA -->
+<section id="fabrica" class="secao fabrica" data-secao="A fábrica">
+  <div class="cont">
+    <p class="sobretitulo" data-revela>A fábrica</p>
+    <h2 class="frase" data-palavras>Tecnologia em cada lata. Qualidade em cada demão.</h2>
+    <p class="texto-grande" data-revela>A Matriz é uma fábrica de tintas com linhas da premium à econômica, para uso interno e externo. Vende para depósitos e casas de tinta e também fabrica com a marca do cliente.</p>
+    <div class="contadores" id="contadores"></div>
+    <ul class="fatos" data-revela-grupo>
+      <li><b>5</b><span>linhas de produto</span></li>
+      <li><b>800 ml → 18 L</b><span>do pote ao balde</span></li>
+      <li><b>Tintométrico</b><span>sistema de cores</span></li>
+      <li><b>Interno e externo</b><span>soluções para toda a obra</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. PRODUTO PRINCIPAL -->
+<section id="destaque" class="secao destaque" data-secao="Destaque">
+  <div class="destaque-pin">
+    <div class="destaque-titulo">
+      <p class="sobretitulo">Produto principal</p>
+      <h2>Fachadas &amp; Muros<br><em class="grad">Proteção Emborrachada</em></h2>
+      <p class="destaque-sub">Proteção impermeabilizante fundo e acabamento para superfícies externas.</p>
+    </div>
+    <div class="destaque-centro">
+      <div class="palco destaque-palco" data-tilt="8">
+        <div class="halo halo-forte"></div>
+        <div class="orbita"><i></i></div>
+        <div class="tilt">
+          <div class="destaque-gira">
+            <img src="img/baldes/12-protecao-emborrachada.webp" alt="Balde Proteção Emborrachada" class="balde">
+            <div class="brilho brilho-scroll"></div>
+          </div>
+        </div>
+        <div class="chao"></div>
+      </div>
+      <div class="beneficio b1"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M3 9c3-3 6 3 9 0s6 3 9 0"/><path d="M3 14c3-3 6 3 9 0s6 3 9 0"/><path d="M3 19h18"/></svg></i><b>Película elástica</b><span>Cobre pequenas fissuras</span></div>
+      <div class="beneficio b2"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12Z"/><path d="M9.5 16a2.6 2.6 0 0 0 2.5 2"/></svg></i><b>Repele a água</b><span>Das batidas de chuva</span></div>
+      <div class="beneficio b3"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/><path d="m3 17.5 9 5 9-5"/></svg></i><b>Fundo e acabamento</b><span>Em um só produto</span></div>
+      <div class="beneficio b4"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></svg></i><b>Uso externo</b><span>Fachadas e muros</span></div>
+    </div>
+    <div class="destaque-dados">
+      <div class="rend"><small>Balde 18 kg</small><b>até <span data-conta="90">90</span> m²</b></div>
+      <div class="rend"><small>Galão 3,6 kg</small><b>até <span data-conta="18">18</span> m²</b></div>
+      <div class="cores-linha"><small>Cores</small>
+        <ul>
+          <li style="--c:#FFFFFF"><i></i>Branco</li><li style="--c:#9B4B22"><i></i>Tabaco</li><li style="--c:#231F20"><i></i>Preto</li>
+          <li style="--c:#A09D77"><i></i>Elefante</li><li style="--c:#D4A55D"><i></i>Camurça</li><li style="--c:#868249"><i></i>Concreto</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. LINHA COMPLETA -->
+<section id="linha" class="secao linha" data-secao="Produtos">
+  <div class="cont">
+    <p class="sobretitulo" data-revela>Linha completa</p>
+    <h2 class="titulo-secao" data-revela>Cinco linhas.<br><em class="grad">Uma fábrica.</em></h2>
+    <div class="abas" role="tablist" aria-label="Linhas de produto" data-revela></div>
+    <p class="linha-resumo" aria-live="polite"></p>
+    <div class="grade" id="grade"></div>
+    <p class="dica">Toque ou clique em um produto para ver os detalhes.</p>
+  </div>
+</section>
+
+<!-- 5. SUA MARCA -->
+<section id="sua-marca" class="secao marca" data-secao="Sua marca">
+  <div class="marca-pin">
+    <div class="marca-texto">
+      <p class="sobretitulo">Sua marca, nossa fábrica</p>
+      <h2 class="titulo-secao">Sua marca.<br><em class="grad">Fabricada pela Matriz.</em></h2>
+      <p class="texto-grande">Para redes e revendas que querem uma linha de tintas com a própria marca, com a fábrica Matriz por trás de cada lata.</p>
+      <ol class="passos">
+        <li><b>01</b><div><strong>Conversa inicial</strong><span>Entendemos o seu público e as linhas que fazem sentido para as suas lojas.</span></div></li>
+        <li><b>02</b><div><strong>Escolha das linhas e cores</strong><span>Da premium à econômica, com sistema tintométrico.</span></div></li>
+        <li><b>03</b><div><strong>Rótulo com a sua marca</strong><span>Criação e aprovação da arte da embalagem.</span></div></li>
+        <li><b>04</b><div><strong>Produção na fábrica Matriz</strong><span>Fabricação com o padrão de qualidade da marca Matriz.</span></div></li>
+        <li><b>05</b><div><strong>Entrega</strong><span>Prazo: <mark>[A DEFINIR]</mark></span></div></li>
+      </ol>
+      <ul class="chips"><li>Pedido mínimo: <mark>[A DEFINIR]</mark></li><li>Prazo de produção: <mark>[A DEFINIR]</mark></li></ul>
+    </div>
+    <div class="marca-visual">
+      <p class="marca-rotulo"><span class="r1">Sua marca aqui</span><span class="r2">Assim vai ficar a sua</span></p>
+      <div class="palco marca-palco" data-tilt="10">
+        <div class="halo"></div>
+        <div class="flutua">
+          <div class="tilt">
+            <div class="transforma">
+              <img src="img/baldes/sua-marca-neutro.webp" alt="Balde com rótulo neutro: sua marca aqui" class="balde balde-neutro">
+              <img src="img/baldes/12-protecao-emborrachada.webp" alt="Balde com rótulo Matriz" class="balde balde-matriz">
+              <i class="scan"></i>
+            </div>
+          </div>
+        </div>
+        <div class="chao"></div>
+      </div>
+      <button class="btn-fantasma" id="replay" type="button"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg>Ver a transformação</button>
+    </div>
+  </div>
+</section>
+
+<!-- 6. DIFERENCIAIS -->
+<section id="diferenciais" class="secao diferenciais" data-secao="Diferenciais">
+  <div class="cont">
+    <p class="sobretitulo" data-revela>Diferenciais</p>
+    <h2 class="titulo-secao" data-revela>O que faz <em class="grad">a diferença</em> na parede.</h2>
+    <ul class="difs">
+      <li class="dif d-cobertura"><div class="dif-ico"><svg viewBox="0 0 48 48"><rect class="d" x="8" y="6" width="26" height="12" rx="3"/><path class="d" d="M34 12h6v10H24v6"/><rect class="d" x="21" y="28" width="6" height="14" rx="2"/><path class="d tinta" d="M6 40c6-4 10 4 16 0"/></svg></div><h3>Ótima cobertura</h3></li>
+      <li class="dif d-odor"><div class="dif-ico"><svg viewBox="0 0 48 48"><path class="d" d="M10 38c0-16 10-26 28-28 0 18-10 28-26 28Z"/><path class="d" d="M10 38c6-8 12-14 20-18"/><path class="d ar a1" d="M6 18c3-2 5 2 8 0"/><path class="d ar a2" d="M4 26c3-2 5 2 8 0"/></svg></div><h3>Baixo odor</h3></li>
+      <li class="dif d-rend"><div class="dif-ico"><svg viewBox="0 0 48 48"><rect class="d" x="8" y="8" width="32" height="32" rx="4"/><path class="d seta" d="M17 31 31 17M23 17h8v8M25 31h-8v-8"/></svg></div><h3>Alto rendimento em m²</h3></li>
+      <li class="dif d-tinto"><div class="dif-ico"><svg viewBox="0 0 48 48"><g class="roda"><circle class="d c1" cx="19" cy="19" r="10"/><circle class="d c2" cx="29" cy="19" r="10"/><circle class="d c3" cx="24" cy="28" r="10"/></g></svg></div><h3>Sistema tintométrico</h3></li>
+      <li class="dif d-int"><div class="dif-ico"><svg viewBox="0 0 48 48"><path class="d" d="M6 22 24 8l18 14"/><path class="d" d="M11 19v21h26V19"/><path class="d" d="M20 40V30h8v10"/><circle class="d sol" cx="38" cy="8" r="3"/></svg></div><h3>Uso interno e externo</h3></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 7. CONTATO -->
+<section id="contato" class="secao contato" data-secao="Contato">
+  <div class="cont contato-grade">
+    <div>
+      <p class="sobretitulo" data-revela>Contato</p>
+      <h2 class="titulo-secao" data-revela>Vamos colorir<br><em class="grad">juntos?</em></h2>
+      <p class="texto-grande" data-revela>Fale com a Matriz e conheça a fábrica.</p>
+      <a class="btn-whats" id="btn-whats" href="#contato" target="_blank" rel="noopener" data-revela>
+        <svg viewBox="0 0 24 24"><path d="M5 19l1.2-3.6A8 8 0 1 1 9 17.9Z"/><path d="M9.5 9.5c0 3 2 5 5 5l1-1.5-2-1-1 1c-1 0-2.5-1.5-2.5-2.5l1-1-1-2Z"/></svg>
+        Chamar no WhatsApp
+      </a>
+      <ul class="contatos" id="contatos" data-revela-grupo></ul>
+    </div>
+    <div class="qr-card" data-revela>
+      <div class="qr" id="qr"></div>
+      <b id="qr-titulo">Abra este site no celular</b>
+      <span id="qr-texto">Aponte a câmera para o código.</span>
+    </div>
+  </div>
+  <footer class="rodape">
+    <img src="img/logo-matriz.webp" alt="Tintas Matriz">
+    <p class="rodape-slogan">O seu jeito de <em class="grad">colorir</em></p>
+    <p class="rodape-copy">© <span id="ano"></span> Tintas Matriz</p>
+  </footer>
+</section>
+
+</main>
+
+<!-- Detalhe do produto -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-nome" hidden>
+  <div class="modal-fundo" data-fechar></div>
+  <div class="modal-caixa">
+    <button class="modal-fechar" type="button" data-fechar aria-label="Fechar"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="modal-visual palco" data-tilt="12"><div class="halo"></div><div class="flutua"><div class="tilt" id="modal-img"></div></div><div class="chao"></div></div>
+    <div class="modal-info">
+      <p class="sobretitulo" id="modal-linha"></p>
+      <h3 id="modal-nome"></h3>
+      <p class="modal-selo" id="modal-selo"></p>
+      <p class="modal-desc" id="modal-desc"></p>
+      <div class="modal-bloco" id="modal-rend"></div>
+      <div class="modal-bloco" id="modal-emb"></div>
+      <div class="modal-bloco" id="modal-cores"></div>
+    </div>
+  </div>
+</div>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
