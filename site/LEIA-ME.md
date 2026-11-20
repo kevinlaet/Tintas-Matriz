@@ -34,8 +34,10 @@ Tudo fica no arquivo **`js/dados.js`**. Abra num editor de texto e troque o que 
 - `css/style.css`: visual
 - `js/main.js`: animações e interações
 - `js/particulas.js`: partículas de luz do fundo (Three.js)
+- `js/palco.js`: o "palco" de cada balde (pedestal iluminado, sombra que acompanha a flutuação, feixe de luz e luz nas bordas)
 - `js/dados.js`: **produtos, contatos e números** (é o único arquivo que você precisa editar)
 - `img/baldes/`: os 13 baldes sem fundo + o balde neutro "SUA MARCA AQUI"
+- `img/baldes/luz/`: camadas de luz laranja e vermelha das bordas de cada balde (o render original não é alterado)
 - `vendor/`: bibliotecas (GSAP, ScrollTrigger, Three.js, gerador de QR code)
 - `fonts/`: fontes Sora e Inter
 

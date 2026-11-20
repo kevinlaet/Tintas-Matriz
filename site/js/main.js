@@ -2,6 +2,8 @@
    TINTAS MATRIZ — interações e animações
    ===================================================================== */
 import { CONFIG, CONTADORES, LINHAS } from './dados.js';
+import { palcoHTML, montaPalcos } from './palco.js';
+montaPalcos();
 
 const raiz = document.documentElement;
 raiz.classList.add('js');
@@ -65,32 +67,44 @@ if (mouseFino && !reduz) {
 }
 
 /* ---------------- inclinação 3D dos baldes (mouse) ---------------- */
+/* Cada palco tem: inclinação pelo mouse + giro automático lento (data-gira)
+   + giro extra controlado pela rolagem (t.extra). A luz de recorte acompanha:
+   o lado virado para a luz laranja (esquerda) ou vermelha (direita) acende mais. */
 const tilts = new Set();
+const porPalco = new Map();
 function registraTilt(palco) {
   const el = palco.querySelector('.tilt');
   if (!el) return;
-  const max = parseFloat(palco.dataset.tilt || 10);
-  const t = { palco, el, max, rx: 0, ry: 0, alvoX: 0, alvoY: 0 };
-  tilts.add(t);
+  const t = { palco, el, max: parseFloat(palco.dataset.tilt || 10), gira: parseFloat(palco.dataset.gira || 0), rx: 0, ry: 0, alvoX: 0, alvoY: 0, extra: 0 };
+  tilts.add(t); porPalco.set(palco, t);
   return t;
 }
 $$('[data-tilt]').forEach(registraTilt);
+function luzDoPalco(t, ry) {
+  const k = Math.max(-1, Math.min(1, ry / 14));
+  t.palco.style.setProperty('--rl', (0.82 - 0.5 * k).toFixed(3));
+  t.palco.style.setProperty('--rr', (0.66 + 0.5 * k).toFixed(3));
+}
 if (!reduz) {
   let px = 0.5, py = 0.5, mexeu = false;
   addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; mexeu = true; }, { passive: true });
-  (function giraTilt() {
+  const t0 = performance.now();
+  (function giraTilt(agora) {
+    const seg = ((agora || t0) - t0) / 1000;
     tilts.forEach((t) => {
+      const r = t.palco.getBoundingClientRect();
+      if (r.bottom < -50 || r.top > innerHeight + 50 || !r.width) return;
       if (mexeu) {
-        const r = t.palco.getBoundingClientRect();
-        if (r.bottom > 0 && r.top < innerHeight) {
-          const dx = (px - (r.left + r.width / 2)) / Math.max(innerWidth / 2, 1);
-          const dy = (py - (r.top + r.height / 2)) / Math.max(innerHeight / 2, 1);
-          t.alvoY = Math.max(-1, Math.min(1, dx)) * t.max;
-          t.alvoX = -Math.max(-1, Math.min(1, dy)) * t.max * 0.6;
-        }
+        const dx = (px - (r.left + r.width / 2)) / Math.max(innerWidth / 2, 1);
+        const dy = (py - (r.top + r.height / 2)) / Math.max(innerHeight / 2, 1);
+        t.alvoY = Math.max(-1, Math.min(1, dx)) * t.max;
+        t.alvoX = -Math.max(-1, Math.min(1, dy)) * t.max * 0.5;
       }
       t.rx += (t.alvoX - t.rx) * 0.07; t.ry += (t.alvoY - t.ry) * 0.07;
-      t.el.style.transform = `rotateX(${t.rx.toFixed(2)}deg) rotateY(${t.ry.toFixed(2)}deg)`;
+      const auto = t.gira ? t.gira * Math.sin(seg * Math.PI * 2 / 12) : 0;
+      const ry = t.ry + auto + t.extra;
+      t.el.style.transform = `rotateX(${t.rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) rotateZ(${(auto * 0.08).toFixed(2)}deg)`;
+      luzDoPalco(t, ry);
     });
     requestAnimationFrame(giraTilt);
   })();
@@ -138,7 +152,8 @@ function abertura() {
   tl.from('.hero-sobre', { y: 20, opacity: 0, duration: 1.2 })
     .from('.hero-titulo .ch', { yPercent: 70, opacity: 0, filter: 'blur(14px)', duration: 1.6, stagger: 0.09 }, 0.1)
     .from('.hero-palco', { y: 140, scale: 0.72, opacity: 0, duration: 2.2 }, 0.25)
-    .from('.hero-palco .orbita', { scale: 0.4, opacity: 0, duration: 2, stagger: 0.15 }, 0.6)
+    .from('.hero-palco .ped', { scale: 0.6, opacity: 0, transformOrigin: '50% 40%', duration: 2 }, 0.45)
+    .from('.hero-palco .feixe', { opacity: 0, duration: 2.4, ease: 'power2.out' }, 0.9)
     .from('.hero-legenda, .rolar', { y: 20, opacity: 0, duration: 1.2, stagger: 0.12 }, 1.1)
     .from('.nav', { autoAlpha: 0, duration: 1.4, ease: 'power2.out' }, 0.8);
   iniciaRolagem();
@@ -181,6 +196,8 @@ function iniciaRolagem() {
 /* ---------- 3. produto principal ---------- */
 function destaque() {
   const mm = gsap.matchMedia();
+  const giroDestaque = porPalco.get($('.destaque-palco')) || { extra: 0 };
+  $('.destaque-palco .brilho')?.style.setProperty('animation', 'none');
   const contas = $$('#destaque [data-conta]');
   const contaAte = (p) => contas.forEach((s) => { s.textContent = Math.round(parseFloat(s.dataset.conta) * p); });
   mm.add('(min-width: 1001px) and (min-height: 560px)', () => {
@@ -188,8 +205,9 @@ function destaque() {
     gsap.from('.destaque-titulo > *', { y: 50, opacity: 0, filter: 'blur(8px)', duration: 1.3, ease: 'expo.out', stagger: 0.1, scrollTrigger: { trigger: '#destaque', start: 'top 70%' } });
     gsap.from('.destaque-palco', { y: 120, scale: 0.8, opacity: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: '#destaque', start: 'top 70%' } });
     const tl = gsap.timeline({ scrollTrigger: { trigger: '.destaque-pin', start: 'top top', end: '+=220%', pin: true, scrub: 0.8, anticipatePin: 1 } });
-    tl.fromTo('.destaque-gira', { rotateY: -38, rotateZ: -3, scale: 0.82 }, { rotateY: 38, rotateZ: 3, scale: 1.06, ease: 'none', duration: 1 }, 0)
-      .fromTo('.brilho-scroll', { backgroundPosition: '130% 0' }, { backgroundPosition: '-30% 0', ease: 'none', duration: 1 }, 0)
+    tl.fromTo(giroDestaque, { extra: -12 }, { extra: 12, ease: 'none', duration: 1 }, 0)
+      .fromTo('.destaque-palco .corpo', { scale: 0.9 }, { scale: 1.04, ease: 'none', duration: 1 }, 0)
+      .fromTo('.destaque-palco .brilho', { backgroundPosition: '130% 0' }, { backgroundPosition: '-30% 0', ease: 'none', duration: 1 }, 0)
       .from('.b1', { x: -60, opacity: 0, duration: 0.14 }, 0.12)
       .from('.b2', { x: 60, opacity: 0, duration: 0.14 }, 0.28)
       .from('.b3', { x: -60, opacity: 0, duration: 0.14 }, 0.44)
@@ -202,7 +220,7 @@ function destaque() {
     gsap.from('.destaque-titulo > *, .beneficio, .destaque-dados > *', { y: 40, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.08, scrollTrigger: { trigger: '#destaque', start: 'top 75%' } });
     const o = { p: 0 }; contaAte(0);
     ScrollTrigger.create({ trigger: '.destaque-dados', start: 'top 90%', once: true, onEnter: () => gsap.to(o, { p: 1, duration: 2, ease: 'power3.out', onUpdate: () => contaAte(o.p) }) });
-    gsap.fromTo('.destaque-gira', { rotateY: -25 }, { rotateY: 25, ease: 'none', scrollTrigger: { trigger: '.destaque-centro', start: 'top bottom', end: 'bottom top', scrub: true } });
+    gsap.fromTo(giroDestaque, { extra: -10 }, { extra: 10, ease: 'none', scrollTrigger: { trigger: '.destaque-centro', start: 'top bottom', end: 'bottom top', scrub: true } });
   });
 }
 
@@ -315,9 +333,7 @@ function escolheLinha(id, animar) {
   } else desenha();
 }
 function cartao(p, i) {
-  const visual = p.img
-    ? `<img src="${p.img}" alt="${esc(p.nome)}" loading="lazy" decoding="async" style="--d:${(-i * 0.7).toFixed(1)}s"><i class="sombra"></i>`
-    : `<div class="prod-ico" style="--d:${(-i * 0.7).toFixed(1)}s">${ICONES[p.icone] || ICONES.gota}</div>`;
+  const visual = `<div class="palco">${palcoHTML({ src: p.img, icone: ICONES[p.icone] || ICONES.gota, mini: true, atraso: (-i * 0.8).toFixed(1), alt: esc(p.nome) })}</div>`;
   const r = p.rend && p.rend.length ? p.rend[0] : (p.emb || []).join(' · ');
   return `<button class="prod${p.destaque ? ' estrela' : ''}" type="button" data-id="${p.id}" aria-label="${esc(p.nome)}: ver detalhes">
     <div class="prod-img">${visual}</div>
@@ -338,7 +354,8 @@ function abreModal(id, origem) {
   $('#modal-selo').textContent = p.selo || '';
   $('#modal-selo').hidden = !p.selo;
   $('#modal-desc').textContent = p.desc;
-  $('#modal-img').innerHTML = p.img ? `<img src="${p.img}" alt="${esc(p.nome)}" class="balde">` : `<div class="prod-ico">${ICONES[p.icone] || ICONES.gota}</div>`;
+  const palcoM = $('#modal-palco');
+  palcoM.innerHTML = palcoHTML({ src: p.img, icone: ICONES[p.icone] || ICONES.gota, alt: esc(p.nome), brilho: !!p.img });
   const lista = (t, itens, obs) => `<h4>${t}</h4><ul>${itens.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>${obs ? `<p class="obs">${esc(obs)}</p>` : ''}`;
   $('#modal-rend').innerHTML = p.rend && p.rend.length ? lista('Rendimento', p.rend, p.obs) : '<h4>Rendimento</h4><ul><li><mark>[A DEFINIR]</mark></li></ul>';
   $('#modal-emb').innerHTML = p.emb && p.emb.length ? lista('Embalagens', p.emb) : '';
@@ -346,11 +363,12 @@ function abreModal(id, origem) {
   $('#modal-cores').classList.add('modal-cores');
   modal.hidden = false;
   document.body.style.overflow = 'hidden';
-  if (!tiltModal) tiltModal = registraTilt($('.modal-visual'));
+  if (tiltModal) tilts.delete(tiltModal);
+  tiltModal = registraTilt(palcoM);
   if (temGsap && !reduz) {
     gsap.fromTo('.modal-fundo', { opacity: 0 }, { opacity: 1, duration: 0.5 });
     gsap.fromTo('.modal-caixa', { y: 60, scale: 0.94, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.9, ease: 'expo.out' });
-    gsap.fromTo('#modal-img > *', { y: 80, scale: 0.8, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 1.4, ease: 'expo.out', delay: 0.1 });
+    gsap.fromTo('#modal-palco .corpo', { y: 80, scale: 0.8, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 1.4, ease: 'expo.out', delay: 0.1 });
     gsap.fromTo('.modal-info > *', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: 'expo.out', stagger: 0.05, delay: 0.15 });
   }
   $('.modal-fechar').focus({ preventScroll: true });
