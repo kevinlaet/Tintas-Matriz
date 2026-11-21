@@ -177,14 +177,12 @@ export function baldePlano(rotuloCanvas, { L = 520, tamanho = '18L' } = {}) {
     const u = 0.5 + am / (2 * Math.PI);
     const curva = ry * (1 - Math.cos(am));
     ctx.drawImage(src, u * sw, 0, Math.max(1, sw / (2 * fatias)), sh, xs0, topoY + ry - curva, Math.max(1, xs1 - xs0 + 0.6), corpoH);
-    const sombra = 0.55 * (1 - Math.cos(am)) ** 1.6;
+    // sombra nas laterais (o cilindro vira para longe da luz) e um brilho suave à esquerda
+    const sombra = 0.42 * (1 - Math.cos(am)) ** 2;
+    const brilho = 0.16 * Math.exp(-(((am + 0.55) / 0.22) ** 2));
     ctx.fillStyle = `rgba(0,0,0,${sombra})`; ctx.fillRect(xs0, topoY + ry - curva, Math.max(1, xs1 - xs0 + 0.6), corpoH);
+    if (brilho > 0.01) { ctx.fillStyle = `rgba(255,255,255,${brilho})`; ctx.fillRect(xs0, topoY + ry - curva, Math.max(1, xs1 - xs0 + 0.6), corpoH); }
   }
-  // fundo arredondado: recorte elíptico inferior
-  ctx.globalCompositeOperation = 'destination-in';
-  ctx.beginPath(); ctx.moveTo(cx - R, 0); ctx.lineTo(cx + R, 0); ctx.lineTo(cx + R, topoY + ry + corpoH - ry);
-  ctx.ellipse(cx, topoY + corpoH, R * 0.97, ry * 1.4, 0, 0, Math.PI); ctx.lineTo(cx - R, 0); ctx.fill();
-  ctx.globalCompositeOperation = 'source-over';
   // tampa
   const tg = ctx.createLinearGradient(x0, 0, x0 + W, 0);
   tg.addColorStop(0, '#cfcfcc'); tg.addColorStop(0.35, '#fbfbf9'); tg.addColorStop(0.7, '#ecece9'); tg.addColorStop(1, '#bdbdba');
