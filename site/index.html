@@ -4,176 +4,294 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tintas Matriz · O seu jeito de colorir</title>
-<meta name="description" content="Tintas Matriz: fábrica de tintas com linhas da premium à econômica, uso interno e externo, sistema tintométrico e fabricação com a sua marca.">
+<meta name="description" content="Tintas Matriz: fábrica de tintas, impermeabilizantes, esmaltes e complementos. Da linha premium à econômica, e também com a marca de quem revende.">
 <meta name="theme-color" content="#0A0A0A">
 <meta property="og:title" content="Tintas Matriz · O seu jeito de colorir">
-<meta property="og:description" content="Fábrica de tintas: da premium à econômica, e também com a sua marca.">
+<meta property="og:description" content="Fábrica de tintas. Da premium à econômica, e também com a sua marca.">
 <meta property="og:image" content="img/og-matriz.jpg">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preload" href="fonts/sora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="img/baldes/12-protecao-emborrachada.webp" as="image">
+<link rel="modulepreload" href="vendor/three.module.min.js">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="carregando">
 
-<!-- Tela de abertura -->
 <div id="loader" aria-hidden="true">
   <img src="img/logo-matriz.webp" alt="" class="loader-logo">
   <div class="loader-bar"><i></i></div>
 </div>
 
-<canvas id="particulas" aria-hidden="true"></canvas>
+<canvas id="gl" aria-hidden="true"></canvas>
 <div class="grao" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"><i class="cursor-anel"></i><i class="cursor-ponto"></i></div>
 <div class="progresso" aria-hidden="true"><i></i></div>
+<svg class="cortina" aria-hidden="true"><defs><linearGradient id="gradCortina" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7A600"/><stop offset=".5" stop-color="#EE6A0A"/><stop offset="1" stop-color="#C8102E"/></linearGradient><linearGradient id="brilhoCortina" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#fff" stop-opacity=".18"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><path class="cortina-tinta" fill="url(#gradCortina)"/><path class="cortina-brilho" fill="url(#brilhoCortina)"/></svg>
 
 <header class="nav">
   <a href="#inicio" class="nav-logo" aria-label="Tintas Matriz, início"><img src="img/logo-matriz.webp" alt="Tintas Matriz"></a>
   <nav class="nav-links" aria-label="Seções">
     <a href="#fabrica">A fábrica</a>
-    <a href="#destaque">Destaque</a>
-    <a href="#linha">Produtos</a>
+    <a href="#emborrachada">Emborrachada</a>
+    <a href="#produtos">Produtos</a>
     <a href="#sua-marca">Sua marca</a>
+    <a href="#cores">Cores</a>
     <a href="#diferenciais">Diferenciais</a>
     <a href="#contato">Contato</a>
   </nav>
   <div class="nav-acoes">
+    <button class="btn-icone" id="btn-som" type="button" aria-pressed="false" aria-label="Ligar som" title="Som">
+      <svg class="som-off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="m17 9 4 6M21 9l-4 6"/></svg>
+      <svg class="som-on" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+    </button>
     <button class="btn-icone" id="tela-cheia" type="button" aria-label="Tela cheia" title="Tela cheia (F)">
       <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
     </button>
-    <a href="#contato" class="btn-nav">Fale conosco</a>
+    <a href="#contato" class="btn-nav magnetico">Fale conosco</a>
   </div>
 </header>
 
 <nav class="pontos" aria-label="Navegação por seção"></nav>
+<div class="vitrine-aviso" aria-live="polite"><span>Modo vitrine</span> Toque em qualquer lugar para explorar</div>
 
 <main>
 
-<!-- 1. HERO -->
+<!-- 1. TOPO: tinta líquida + balde 3D -->
 <section id="inicio" class="hero" data-secao="Início">
-  <div class="hero-luz" aria-hidden="true"></div>
-  <p class="sobretitulo hero-sobre">Fábrica de tintas · Tintas Matriz</p>
-  <h1 class="hero-titulo"><span class="hl">O seu jeito</span> <span class="hl">de <em class="grad">colorir</em></span></h1>
-  <div class="palco hero-palco" data-palco="12" data-src="img/baldes/12-protecao-emborrachada.webp" data-alt="Balde Matriz Fachadas &amp; Muros Proteção Emborrachada" data-poeira data-brilho data-tilt="9" data-gira="9"></div>
-  <p class="hero-legenda"><span>Fachadas &amp; Muros</span> Proteção Emborrachada</p>
-  <a href="#fabrica" class="rolar" aria-label="Role para descobrir"><span class="rolar-mouse"><i></i></span><span>Role para descobrir</span></a>
+  <div class="hero-fallback" aria-hidden="true"></div>
+  <p class="sobretitulo hero-sobre">Fábrica de tintas</p>
+  <h1 class="hero-titulo" data-pinta><span>O seu jeito</span> <span>de <em class="grad">colorir</em></span></h1>
+  <div class="palco3d hero-palco" id="hero-palco" data-produto="protecao-emborrachada" data-tamanho="18L">
+    <div class="palco palco2d" data-palco="12" data-src="img/baldes/12-protecao-emborrachada" data-alt="Balde Matriz Fachadas &amp; Muros Proteção Emborrachada" data-brilho data-tilt="8"></div>
+  </div>
+  <div class="hero-rodape">
+    <p class="hero-dica"><span class="so-gl">Passe o dedo na tinta · arraste o balde para girar</span></p>
+    <button class="btn-fantasma btn-giro" id="btn-giro" type="button" hidden><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M21 3v6h-6"/></svg>Ativar movimento</button>
+    <a href="#fabrica" class="rolar" aria-label="Role para descobrir"><span class="rolar-mouse"><i></i></span><span>Role para descobrir</span></a>
+  </div>
 </section>
 
 <!-- 2. A FÁBRICA -->
 <section id="fabrica" class="secao fabrica" data-secao="A fábrica">
   <div class="cont">
     <p class="sobretitulo" data-revela>A fábrica</p>
-    <h2 class="frase" data-palavras>Tecnologia em cada lata. Qualidade em cada demão.</h2>
-    <p class="texto-grande" data-revela>A Matriz é uma fábrica de tintas com linhas da premium à econômica, para uso interno e externo. Vende para depósitos e casas de tinta e também fabrica com a marca do cliente.</p>
+    <h2 class="frase" data-pinta>A gente fabrica a tinta. <em class="grad">Você escolhe o rótulo.</em></h2>
+    <p class="texto-grande" data-revela>A Matriz produz tintas, impermeabilizantes, esmaltes e complementos, da linha premium à econômica, para parede de dentro e de fora. Vende para depósitos e casas de tinta e fabrica com a marca de quem revende.</p>
     <div class="contadores" id="contadores"></div>
     <ul class="fatos" data-revela-grupo>
       <li><b>5</b><span>linhas de produto</span></li>
+      <li><b>Interno e externo</b><span>da parede da sala à laje</span></li>
       <li><b>800 ml → 18 L</b><span>do pote ao balde</span></li>
-      <li><b>Tintométrico</b><span>sistema de cores</span></li>
-      <li><b>Interno e externo</b><span>soluções para toda a obra</span></li>
+      <li><b>Tintométrico</b><span>bases para sistema de cores</span></li>
     </ul>
   </div>
+  <div class="pincelada" aria-hidden="true"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path d="M10 52 C 220 18, 420 70, 640 38 S 1010 22, 1190 44"/></svg></div>
 </section>
 
-<!-- 3. PRODUTO PRINCIPAL -->
-<section id="destaque" class="secao destaque" data-secao="Destaque">
-  <div class="destaque-pin">
-    <div class="destaque-titulo">
+<!-- 3. EMBORRACHADA: demonstração técnica -->
+<section id="emborrachada" class="secao emb" data-secao="Emborrachada">
+  <div class="emb-pin">
+    <div class="emb-topo">
       <p class="sobretitulo">Produto principal</p>
-      <h2>Fachadas &amp; Muros<br><em class="grad">Proteção Emborrachada</em></h2>
-      <p class="destaque-sub">Proteção impermeabilizante fundo e acabamento para superfícies externas.</p>
+      <h2 class="titulo-secao emb-titulo" data-pinta>Fachadas &amp; Muros <em class="grad">Proteção Emborrachada</em></h2>
+      <p class="emb-sub">Proteção impermeabilizante de fundo e acabamento para superfícies externas.</p>
     </div>
-    <div class="destaque-centro">
-      <div class="palco destaque-palco" data-palco="12" data-src="img/baldes/12-protecao-emborrachada.webp" data-alt="Balde Proteção Emborrachada" data-brilho data-tilt="6"></div>
-      <div class="beneficio b1"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M3 9c3-3 6 3 9 0s6 3 9 0"/><path d="M3 14c3-3 6 3 9 0s6 3 9 0"/><path d="M3 19h18"/></svg></i><b>Película elástica</b><span>Cobre pequenas fissuras</span></div>
-      <div class="beneficio b2"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12Z"/><path d="M9.5 16a2.6 2.6 0 0 0 2.5 2"/></svg></i><b>Repele a água</b><span>Das batidas de chuva</span></div>
-      <div class="beneficio b3"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/><path d="m3 17.5 9 5 9-5"/></svg></i><b>Fundo e acabamento</b><span>Em um só produto</span></div>
-      <div class="beneficio b4"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></svg></i><b>Uso externo</b><span>Fachadas e muros</span></div>
+    <div class="emb-demo">
+      <svg class="parede-tec" viewBox="40 -10 520 470" role="img" aria-label="Demonstração: parede com pequena fissura recebendo a película emborrachada, que repele a chuva">
+        <defs>
+          <filter id="reboco" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .55  0 0 0 0 .52  0 0 0 0 .49  0 0 0 .55 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+          <linearGradient id="gParede" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8d857c"/><stop offset="1" stop-color="#6f6860"/></linearGradient>
+          <linearGradient id="gFilme" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E7B56A"/><stop offset=".55" stop-color="#D4A55D"/><stop offset="1" stop-color="#B98A45"/></linearGradient>
+          <linearGradient id="gBrilhoFilme" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <clipPath id="clipFilme"><rect class="filme-clip" x="70" y="40" width="460" height="0"/></clipPath>
+          <clipPath id="clipParede"><rect x="70" y="40" width="460" height="360" rx="6"/></clipPath>
+        </defs>
+        <g class="tec-chao"><rect x="40" y="400" width="520" height="6" rx="3" fill="#2a2321"/></g>
+        <g clip-path="url(#clipParede)">
+          <rect x="70" y="40" width="460" height="360" fill="url(#gParede)"/>
+          <rect x="70" y="40" width="460" height="360" filter="url(#reboco)" opacity=".7"/>
+          <path class="fissura" d="M300 40 L292 92 L306 140 L296 196 L312 250 L300 310 L308 400" fill="none" stroke="#2b2420" stroke-width="3" stroke-linecap="round"/>
+          <g clip-path="url(#clipFilme)">
+            <rect x="70" y="40" width="460" height="360" fill="url(#gFilme)"/>
+            <path d="M300 40 L292 92 L306 140 L296 196 L312 250 L300 310 L308 400" fill="none" stroke="#c99a52" stroke-width="7" stroke-linecap="round" opacity=".55"/>
+            <rect class="filme-brilho" x="-200" y="40" width="180" height="360" fill="url(#gBrilhoFilme)"/>
+          </g>
+          <line class="filme-borda" x1="70" y1="40" x2="530" y2="40" stroke="#fff" stroke-width="2" opacity="0"/>
+        </g>
+        <g class="gotas"></g>
+        <g class="camadas" opacity="0">
+          <rect x="70" y="414" width="220" height="12" rx="6" fill="#5a524b"/><text x="70" y="446" class="tec-txt">Fundo</text>
+          <rect x="310" y="414" width="220" height="12" rx="6" fill="#8f7a5c"/><text x="310" y="446" class="tec-txt">Acabamento</text>
+          <rect class="camada-unica" x="70" y="414" width="460" height="12" rx="6" fill="url(#gFilme)" opacity="0"/>
+        </g>
+        <g class="tempo" opacity="0">
+          <circle cx="520" cy="22" r="12" fill="#F7A600"/><g stroke="#F7A600" stroke-width="2" stroke-linecap="round"><path d="M520 2v-6M540 22h6M534 8l4-4M506 8l-4-4"/></g>
+        </g>
+      </svg>
+      <ol class="emb-passos">
+        <li class="ep"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M3 9c3-3 6 3 9 0s6 3 9 0"/><path d="M3 14c3-3 6 3 9 0s6 3 9 0"/><path d="M3 19h18"/></svg></i><div><b>Película elástica</b><span>Cobre pequenas fissuras.</span></div></li>
+        <li class="ep"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M12 3C8 9 6 12 6 15a6 6 0 0 0 12 0c0-3-2-6-6-12Z"/><path d="M9.5 16a2.6 2.6 0 0 0 2.5 2"/></svg></i><div><b>Repele a chuva</b><span>A película repele as batidas de água.</span></div></li>
+        <li class="ep"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/><path d="m3 17.5 9 5 9-5"/></svg></i><div><b>Fundo e acabamento</b><span>Um produto faz as duas etapas.</span></div></li>
+        <li class="ep"><i class="ben-ico"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></svg></i><div><b>Uso externo</b><span>Feita para fachadas e muros.</span></div></li>
+      </ol>
     </div>
-    <div class="destaque-dados">
-      <div class="rend"><small>Balde 18 kg</small><b>até <span data-conta="90">90</span> m²</b></div>
-      <div class="rend"><small>Galão 3,6 kg</small><b>até <span data-conta="18">18</span> m²</b></div>
-      <div class="cores-linha"><small>Cores</small>
-        <ul>
-          <li style="--c:#FFFFFF"><i></i>Branco</li><li style="--c:#9B4B22"><i></i>Tabaco</li><li style="--c:#231F20"><i></i>Preto</li>
-          <li style="--c:#A09D77"><i></i>Elefante</li><li style="--c:#D4A55D"><i></i>Camurça</li><li style="--c:#868249"><i></i>Concreto</li>
-        </ul>
+    <div class="emb-lado">
+      <div class="palco3d emb-palco" id="emb-palco" data-produto="protecao-emborrachada" data-tamanho="18L">
+        <div class="palco palco2d" data-palco="12" data-src="img/baldes/12-protecao-emborrachada" data-alt="Balde Proteção Emborrachada" data-tilt="6"></div>
+      </div>
+      <div class="emb-dados">
+        <div class="rend"><small>Balde 18 kg</small><b>até <span data-conta="90">90</span> m²</b></div>
+        <div class="rend"><small>Galão 3,6 kg</small><b>até <span data-conta="18">18</span> m²</b></div>
+        <div class="cores-linha"><small>Cores</small><ul id="emb-cores"></ul><p class="nota-cores"></p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 4. LINHA COMPLETA -->
-<section id="linha" class="secao linha" data-secao="Produtos">
-  <div class="cont">
-    <p class="sobretitulo" data-revela>Linha completa</p>
-    <h2 class="titulo-secao" data-revela>Cinco linhas.<br><em class="grad">Uma fábrica.</em></h2>
-    <div class="abas" role="tablist" aria-label="Linhas de produto" data-revela></div>
-    <p class="linha-resumo" aria-live="polite"></p>
-    <div class="grade" id="grade"></div>
-    <p class="dica">Toque ou clique em um produto para ver os detalhes.</p>
+<!-- 4. PRATELEIRA 3D -->
+<section id="produtos" class="secao prateleira" data-secao="Produtos">
+  <div class="prat-pin">
+    <div class="prat-gl" id="prat-gl"></div>
+    <div class="prat-topo">
+      <p class="sobretitulo">Linha completa</p>
+      <h2 class="titulo-secao prat-titulo" data-pinta>Cinco linhas. <em class="grad">Uma fábrica.</em></h2>
+      <div class="prat-linhas" role="tablist" aria-label="Linhas de produto"></div>
+    </div>
+    <div class="prat-info" aria-live="polite">
+      <p class="prat-linha"></p>
+      <h3 class="prat-nome"></h3>
+      <p class="prat-curta"></p>
+      <p class="prat-rend"></p>
+      <div class="prat-acoes">
+        <button class="btn-tinta magnetico" id="prat-detalhe" type="button">Ver detalhes</button>
+        <span class="prat-contador"></span>
+      </div>
+    </div>
+    <div class="prat-setas">
+      <button class="btn-icone grande" id="prat-ant" type="button" aria-label="Produto anterior"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button>
+      <button class="btn-icone grande" id="prat-prox" type="button" aria-label="Próximo produto"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
+    </div>
+    <div class="prat-fallback" id="prat-fallback" hidden></div>
   </div>
 </section>
 
-<!-- 5. SUA MARCA -->
+<!-- 5. SUA MARCA AO VIVO -->
 <section id="sua-marca" class="secao marca" data-secao="Sua marca">
-  <div class="marca-pin">
+  <div class="cont marca-grade">
     <div class="marca-texto">
-      <p class="sobretitulo">Sua marca, nossa fábrica</p>
-      <h2 class="titulo-secao">Sua marca.<br><em class="grad">Fabricada pela Matriz.</em></h2>
-      <p class="texto-grande">Para redes e revendas que querem uma linha de tintas com a própria marca, com a fábrica Matriz por trás de cada lata.</p>
-      <ol class="passos">
-        <li><b>01</b><div><strong>Conversa inicial</strong><span>Entendemos o seu público e as linhas que fazem sentido para as suas lojas.</span></div></li>
-        <li><b>02</b><div><strong>Escolha das linhas e cores</strong><span>Da premium à econômica, com sistema tintométrico.</span></div></li>
-        <li><b>03</b><div><strong>Rótulo com a sua marca</strong><span>Criação e aprovação da arte da embalagem.</span></div></li>
-        <li><b>04</b><div><strong>Produção na fábrica Matriz</strong><span>Fabricação com o padrão de qualidade da marca Matriz.</span></div></li>
-        <li><b>05</b><div><strong>Entrega</strong><span>Prazo: <mark>[A DEFINIR]</mark></span></div></li>
-      </ol>
-      <ul class="chips"><li>Pedido mínimo: <mark>[A DEFINIR]</mark></li><li>Prazo de produção: <mark>[A DEFINIR]</mark></li></ul>
+      <p class="sobretitulo" data-revela>Sua marca, nossa fábrica</p>
+      <h2 class="titulo-secao" data-pinta>Sua marca. <em class="grad">Fabricada pela Matriz.</em></h2>
+      <p class="texto-grande" data-revela>Para redes e revendas que querem uma linha de tintas própria, produzida na fábrica Matriz. Digite o nome e veja o balde pronto.</p>
+      <form class="criador" id="criador" autocomplete="off">
+        <label class="campo"><span>Nome da sua marca</span><input id="marca-nome" type="text" maxlength="28" placeholder="Digite o nome da sua marca"></label>
+        <div class="campo"><span>Cor do rótulo</span><div class="paleta-marca" id="marca-cores"></div></div>
+        <div class="campo duplo">
+          <label><span>Produto</span><select id="marca-produto"></select></label>
+          <label class="logo-up"><span>Logo (opcional)</span><input id="marca-logo" type="file" accept="image/png,image/svg+xml,image/jpeg,image/webp"><b>Escolher arquivo</b></label>
+        </div>
+        <p class="logo-nota">O logo fica só neste aparelho. Nada é enviado.</p>
+        <div class="campo"><span>Embalagem</span><div class="tamanhos" id="marca-tamanhos" role="radiogroup" aria-label="Embalagem">
+          <button type="button" role="radio" aria-checked="true" data-tam="18L">Balde 18 L</button>
+          <button type="button" role="radio" aria-checked="false" data-tam="3.6L">Galão 3,6 L</button>
+          <button type="button" role="radio" aria-checked="false" data-tam="0.9L">Pote 900 ml</button>
+        </div></div>
+      </form>
     </div>
     <div class="marca-visual">
-      <p class="marca-rotulo"><span class="r1">Sua marca aqui</span><span class="r2">Assim vai ficar a sua</span></p>
-      <div class="palco marca-palco" data-palco="12" data-src="img/baldes/12-protecao-emborrachada.webp" data-alt="Balde com rótulo Matriz" data-transforma data-tilt="7"></div>
-      <button class="btn-fantasma" id="replay" type="button"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg>Ver a transformação</button>
+      <div class="palco3d marca-palco" id="marca-palco" data-tamanho="18L">
+        <canvas class="marca-plano" id="marca-plano" width="520" height="580" aria-label="Balde com a sua marca"></canvas>
+      </div>
+      <p class="marca-rotulo"><span id="marca-legenda">Assim vai ficar a sua</span></p>
     </div>
   </div>
+  <div class="cont">
+    <ol class="passos" data-revela-grupo>
+      <li><b>01</b><strong>Conversa inicial</strong><span>Entendemos o seu público e as linhas que fazem sentido para as suas lojas.</span></li>
+      <li><b>02</b><strong>Linhas e cores</strong><span>Da premium à econômica, com sistema tintométrico.</span></li>
+      <li><b>03</b><strong>Rótulo com a sua marca</strong><span>Criação e aprovação da arte da embalagem.</span></li>
+      <li><b>04</b><strong>Produção na fábrica Matriz</strong><span>A sua linha sai da mesma fábrica que produz a Matriz.</span></li>
+      <li><b>05</b><strong>Entrega</strong><span>No prazo combinado no pedido.</span></li>
+    </ol>
+    <ul class="chips" id="marca-condicoes"></ul>
+  </div>
+  <div class="pincelada" aria-hidden="true"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path d="M1190 30 C 980 64, 760 14, 540 46 S 190 60, 10 34"/></svg></div>
 </section>
 
-<!-- 6. DIFERENCIAIS -->
+<!-- 6. SIMULADOR DE COR -->
+<section id="cores" class="secao cores" data-secao="Cores">
+  <div class="cont">
+    <p class="sobretitulo" data-revela>Simulador de cor</p>
+    <h2 class="titulo-secao" data-pinta>Teste a cor antes da <em class="grad">primeira demão.</em></h2>
+    <div class="sim">
+      <div class="sim-cena" id="sim-cena"></div>
+      <div class="sim-painel">
+        <div class="sim-produtos" id="sim-produtos" role="tablist" aria-label="Produto"></div>
+        <div class="sim-ambientes" id="sim-ambientes" role="radiogroup" aria-label="Ambiente"></div>
+        <div class="sim-cartela" id="sim-cartela" role="radiogroup" aria-label="Cor"></div>
+        <p class="sim-escolha"><b id="sim-cor-nome"></b><span id="sim-prod-nome"></span></p>
+        <p class="nota-cores"></p>
+      </div>
+    </div>
+  </div>
+  <div class="pincelada" aria-hidden="true"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path d="M10 52 C 220 18, 420 70, 640 38 S 1010 22, 1190 44"/></svg></div>
+</section>
+
+<!-- 7. DIFERENCIAIS DEMONSTRADOS -->
 <section id="diferenciais" class="secao diferenciais" data-secao="Diferenciais">
   <div class="cont">
     <p class="sobretitulo" data-revela>Diferenciais</p>
-    <h2 class="titulo-secao" data-revela>O que faz <em class="grad">a diferença</em> na parede.</h2>
-    <ul class="difs">
-      <li class="dif d-cobertura"><div class="dif-ico"><svg viewBox="0 0 48 48"><rect class="d" x="8" y="6" width="26" height="12" rx="3"/><path class="d" d="M34 12h6v10H24v6"/><rect class="d" x="21" y="28" width="6" height="14" rx="2"/><path class="d tinta" d="M6 40c6-4 10 4 16 0"/></svg></div><h3>Ótima cobertura</h3></li>
-      <li class="dif d-odor"><div class="dif-ico"><svg viewBox="0 0 48 48"><path class="d" d="M10 38c0-16 10-26 28-28 0 18-10 28-26 28Z"/><path class="d" d="M10 38c6-8 12-14 20-18"/><path class="d ar a1" d="M6 18c3-2 5 2 8 0"/><path class="d ar a2" d="M4 26c3-2 5 2 8 0"/></svg></div><h3>Baixo odor</h3></li>
-      <li class="dif d-rend"><div class="dif-ico"><svg viewBox="0 0 48 48"><rect class="d" x="8" y="8" width="32" height="32" rx="4"/><path class="d seta" d="M17 31 31 17M23 17h8v8M25 31h-8v-8"/></svg></div><h3>Alto rendimento em m²</h3></li>
-      <li class="dif d-tinto"><div class="dif-ico"><svg viewBox="0 0 48 48"><g class="roda"><circle class="d c1" cx="19" cy="19" r="10"/><circle class="d c2" cx="29" cy="19" r="10"/><circle class="d c3" cx="24" cy="28" r="10"/></g></svg></div><h3>Sistema tintométrico</h3></li>
-      <li class="dif d-int"><div class="dif-ico"><svg viewBox="0 0 48 48"><path class="d" d="M6 22 24 8l18 14"/><path class="d" d="M11 19v21h26V19"/><path class="d" d="M20 40V30h8v10"/><circle class="d sol" cx="38" cy="8" r="3"/></svg></div><h3>Uso interno e externo</h3></li>
+    <h2 class="titulo-secao" data-pinta>Menos discurso. <em class="grad">Mais metro quadrado.</em></h2>
+    <div class="demos">
+      <article class="demo demo-planta">
+        <header><h3>Quanto pinta um balde de 18 L</h3><p>Escolha a tinta e arraste. Cada quadradinho é 1 m² pintado, pelo rendimento do catálogo.</p></header>
+        <div class="planta-produtos" id="planta-produtos" role="radiogroup" aria-label="Produto"></div>
+        <div class="planta"><svg id="planta" viewBox="0 0 400 260" role="img" aria-label="Planta baixa sendo pintada"></svg></div>
+        <div class="planta-controle"><input type="range" id="planta-range" min="0" max="170" value="0" aria-label="Metros quadrados"><output id="planta-saida">0 m²</output></div>
+      </article>
+      <article class="demo demo-regua">
+        <header><h3>Da premium à econômica</h3><p>Cada produto na faixa em que o catálogo o coloca.</p></header>
+        <div class="regua" id="regua"></div>
+      </article>
+      <article class="demo demo-cobertura">
+        <header><h3>Cobertura</h3><p>Arraste para comparar. Ilustrativo: uma cor forte recebendo uma cor clara, lisa e uniforme.</p></header>
+        <div class="antes-depois" id="antes-depois">
+          <div class="ad-antes"><span>Antes</span></div>
+          <div class="ad-depois"><span>Depois</span></div>
+          <div class="ad-alca" role="slider" tabindex="0" aria-label="Comparar antes e depois" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><i></i></div>
+        </div>
+      </article>
+      <article class="demo demo-odor">
+        <header><h3>Baixo odor</h3><p>Pelo catálogo, estes produtos têm baixo odor ou são sem cheiro.</p></header>
+        <div class="odor"><svg viewBox="0 0 300 160" aria-hidden="true"><g class="ar"><path d="M20 60c40-30 80 30 120 0s80 30 140 0"/><path d="M20 95c40-30 80 30 120 0s80 30 140 0"/><path d="M20 130c40-30 80 30 120 0s80 30 140 0"/></g><g class="folha"><path d="M150 40c0-18 14-30 34-32 0 20-12 34-34 32Z"/><path d="M150 40c8-10 16-18 28-24"/></g></svg></div>
+        <ul class="odor-lista" id="odor-lista"></ul>
+      </article>
+    </div>
+    <ul class="mini-difs" data-revela-grupo>
+      <li><b>Sistema tintométrico</b><span>Bases para tingimento em produtos como Premium Completo e Hiper Rendimento.</span></li>
+      <li><b>Interno e externo</b><span>Produtos para parede de dentro, fachada, muro, telhado e laje.</span></li>
     </ul>
   </div>
+  <div class="pincelada" aria-hidden="true"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path d="M1190 30 C 980 64, 760 14, 540 46 S 190 60, 10 34"/></svg></div>
 </section>
 
-<!-- 7. CONTATO -->
+<!-- 8. CONTATO -->
 <section id="contato" class="secao contato" data-secao="Contato">
   <div class="cont contato-grade">
     <div>
       <p class="sobretitulo" data-revela>Contato</p>
-      <h2 class="titulo-secao" data-revela>Vamos colorir<br><em class="grad">juntos?</em></h2>
-      <p class="texto-grande" data-revela>Fale com a Matriz e conheça a fábrica.</p>
-      <a class="btn-whats" id="btn-whats" href="#contato" target="_blank" rel="noopener" data-revela>
+      <h2 class="titulo-secao" data-pinta>Sua linha de tintas começa <em class="grad">numa conversa.</em></h2>
+      <a class="btn-whats magnetico" id="btn-whats" href="#contato" target="_blank" rel="noopener" data-revela>
         <svg viewBox="0 0 24 24"><path d="M5 19l1.2-3.6A8 8 0 1 1 9 17.9Z"/><path d="M9.5 9.5c0 3 2 5 5 5l1-1.5-2-1-1 1c-1 0-2.5-1.5-2.5-2.5l1-1-1-2Z"/></svg>
         Chamar no WhatsApp
       </a>
       <ul class="contatos" id="contatos" data-revela-grupo></ul>
     </div>
-    <div class="qr-card" data-revela>
+    <div class="qr-card" id="qr-card" data-revela>
       <div class="qr" id="qr"></div>
-      <b id="qr-titulo">Abra este site no celular</b>
-      <span id="qr-texto">Aponte a câmera para o código.</span>
+      <b id="qr-titulo">Fale pelo WhatsApp</b>
+      <span id="qr-texto">Aponte a câmera do celular para o código.</span>
     </div>
   </div>
   <footer class="rodape">
@@ -185,7 +303,6 @@
 
 </main>
 
-<!-- Detalhe do produto -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-nome" hidden>
   <div class="modal-fundo" data-fechar></div>
   <div class="modal-caixa">
@@ -198,7 +315,8 @@
       <p class="modal-desc" id="modal-desc"></p>
       <div class="modal-bloco" id="modal-rend"></div>
       <div class="modal-bloco" id="modal-emb"></div>
-      <div class="modal-bloco" id="modal-cores"></div>
+      <div class="modal-bloco modal-cores" id="modal-cores"></div>
+      <p class="modal-rotulo-nota" id="modal-nota" hidden>Rótulo ilustrativo no padrão Matriz.</p>
     </div>
   </div>
 </div>

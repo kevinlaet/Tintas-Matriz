@@ -9,22 +9,20 @@ let uid = 0;
 
 export const numeroDo = (src) => (src || '').split('/').pop().slice(0, 2);
 
-export function palcoHTML({ src = '', icone = '', n = numeroDo(src), mini = false, poeira = false, orbita = !mini, brilho = false, transforma = false, atraso = 0, alt = '' } = {}) {
+export function palcoHTML({ src = '', url = '', icone = '', n = numeroDo(src), mini = false, poeira = false, orbita = !mini, brilho = false, atraso = 0, alt = '' } = {}) {
   const id = 'pc' + (++uid);
   const d = `animation-delay:${atraso}s`;
   const luzE = `img/baldes/luz/${n}-e.webp`, luzD = `img/baldes/luz/${n}-d.webp`;
+  const img800 = src ? `${src}-800.webp` : url;
+  const srcset = src ? ` srcset="${src}-800.webp 801w, ${src}-1600.webp 1602w" sizes="(max-width: 900px) 60vw, 420px"` : '';
   const mascara = (u) => `-webkit-mask-image:url(${u});mask-image:url(${u})`;
   let corpo;
-  if (src) {
-    const imgs = transforma
-      ? `<img src="img/baldes/sua-marca-neutro.webp" alt="Balde com rótulo neutro: sua marca aqui" class="balde balde-neutro" decoding="async">
-         <img src="${src}" alt="${alt}" class="balde balde-matriz" decoding="async"><i class="scan"></i>`
-      : `<img src="${src}" alt="${alt}" class="balde" decoding="async"${mini ? ' loading="lazy"' : ''}>`;
-    corpo = `<div class="corpo${transforma ? ' transforma' : ''}">${imgs}
-      <i class="luz luz-e" style="background-image:url(${luzE})"></i>
-      <i class="luz luz-d" style="background-image:url(${luzD})"></i>
-      <i class="sombreia" style="${mascara(src)}"></i>
-      ${brilho ? `<i class="brilho" style="${mascara(src)}"></i>` : ''}</div>`;
+  if (src || url) {
+    const imgs = `<img src="${img800}"${srcset} alt="${alt}" class="balde" decoding="async"${mini ? ' loading="lazy"' : ''}>`;
+    const luzes = src ? `<i class="luz luz-e" style="background-image:url(${luzE})"></i><i class="luz luz-d" style="background-image:url(${luzD})"></i>` : '';
+    corpo = `<div class="corpo">${imgs}${luzes}
+      <i class="sombreia" style="${mascara(img800)}"></i>
+      ${brilho ? `<i class="brilho" style="${mascara(img800)}"></i>` : ''}</div>`;
   } else {
     corpo = `<div class="corpo orbe"><span>${icone}</span></div>`;
   }
@@ -53,7 +51,7 @@ export function palcoHTML({ src = '', icone = '', n = numeroDo(src), mini = fals
       <ellipse cx="200" cy="24" rx="104" ry="12" fill="none" stroke="url(#${id}a)" stroke-opacity=".14" stroke-width=".6"/>
       <ellipse cx="200" cy="21" rx="120" ry="9" fill="url(#${id}q)"/>
       <ellipse cx="200" cy="24" rx="190" ry="22" fill="url(#${id}v)"/>
-      <ellipse class="sombra-c" style="${d}" cx="200" cy="25" rx="${src ? 112 : 84}" ry="11" fill="url(#${id}s)"/>
+      <ellipse class="sombra-c" style="${d}" cx="200" cy="25" rx="${src || url ? 112 : 84}" ry="11" fill="url(#${id}s)"/>
     </g>
     <ellipse cx="200" cy="24" rx="190" ry="22" fill="none" stroke="url(#${id}a)" stroke-width="4" filter="url(#${id}g)" opacity=".8"/>
     <ellipse cx="200" cy="24" rx="190" ry="22" fill="none" stroke="url(#${id}a)" stroke-width="1.4"/>
@@ -72,7 +70,7 @@ export function montaPalcos(raiz = document) {
     el.innerHTML = palcoHTML({
       src, n, alt: el.dataset.alt || '',
       poeira: 'poeira' in el.dataset, brilho: 'brilho' in el.dataset,
-      transforma: 'transforma' in el.dataset, orbita: !('semOrbita' in el.dataset),
+      orbita: !('semOrbita' in el.dataset),
     });
   });
 }
